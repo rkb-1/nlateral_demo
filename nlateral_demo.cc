@@ -412,6 +412,7 @@ void Run(const Arguments& args, Controller* controller) {
       std::chrono::microseconds(static_cast<int64_t>(args.period_s * 1e6));
   auto next_cycle = std::chrono::steady_clock::now() + period;
 
+  std::cout << "Start Teleoperation" << std::endl;
   const auto status_period = std::chrono::milliseconds(100);
   auto next_status = next_cycle + status_period;
   uint64_t cycle_count = 0;
@@ -419,7 +420,11 @@ void Run(const Arguments& args, Controller* controller) {
   uint64_t margin_cycles = 0;
 
   // We will run at a fixed cycle time.
-  while (true) {
+  
+  // run time definition
+  const auto start_time = std::chrono::steady_clock::now();
+  
+  while ((std::chrono::steady_clock::now() - start_time) <= std::chrono::seconds(180)) {
     cycle_count++;
     margin_cycles++;
     {
